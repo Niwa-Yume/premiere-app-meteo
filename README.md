@@ -1,7 +1,7 @@
 # Mon App Météo
 
   
-Ceci est ma première app Météo, j'ai utilisé HTML,CSS et JS pour ce mini projet. Le but était d'utilisé une API et de modifier le contenue en fonction des données de l'API
+  Ceci est ma première app Météo, j'ai utilisé HTML, CSS et JS pour ce mini projet. Le but était d'utiliser une API et de modifier le contenu en fonction des données de l'API  
   
 
 ## 🛠️ Tech utilisées 
