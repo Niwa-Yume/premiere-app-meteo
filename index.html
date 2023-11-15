@@ -1,0 +1,93 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="style.css">
+        <title>App Météo</title>
+    </head>
+
+    <body>
+        <!--Div qui fait la carte du projet-->
+        <div class="card">
+            <!--Div qui fait la bar de recherche du projet-->
+            <div class="search">
+                <input type="text" placeholder="Entre le nom de ta ville !" spellcheck="false">
+                <button><img src="images/search.png" alt=""></button>
+            </div>
+
+            <!--Div qui fait l'icon de la meteo, température et la ville-->
+            <div class="meteo">
+                <img src="images/rain.png" class="icon-meteo">
+                <h1 class="temp">22°C</h1> 
+                <h2 class="ville">Genève</h2>
+            </div>
+            <!--Div qui fournit les détails-->
+            <div class="details">
+                <!--Div qui fournit les détails sur l'humidité-->
+                <div class="col">
+                    <img src="images/humidity.png">
+                    <div>
+                        <p class="humidite">50%</p>
+                        <p>Humidité</p>
+                    </div>
+                </div>
+                <!--Div qui fournit les détails sur la vitesse du vent-->
+                <div class="col">
+                    <img src="images/wind.png">
+                    <div>
+                        <p class="vent">15 km/h</p>
+                        <p>Vitesse du vent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Script qui permet de recup les données de l'API-->
+        <script>
+            /**Les constantes qu'on a pour utiliser l'API*/
+            const apiKey = "e16138163982667226c7ec8a1ca8c84c";
+            const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+            const searchBox = document.querySelector(".search input");
+            const searchBouton = document.querySelector(".search button");
+            const iconMeteo = document.querySelector(".icon-meteo");
+
+            /**Fonction qui permet de recup les données de l'API*/
+            async function checkmeteo(ville) {
+                const response = await fetch(apiURL + ville + "&appid=" + apiKey);
+                var data = await response.json();
+                console.log(data);
+
+                /**recup des data via l'API*/
+                document.querySelector(".ville").innerHTML = data.name;
+                document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+                document.querySelector(".humidite").innerHTML = data.main.humidity + "%";
+                document.querySelector(".vent").innerHTML = data.wind.speed + "km/h";
+
+                /**Affiche/modifier les icons de la meteo*/
+                if (data.weather[0].main == "Clouds") {
+                    iconMeteo.src = "images/clouds.png";
+                }
+                else if (data.weather[0].main == "Clear"){
+                    iconMeteo.src = "images/clear.png";
+                }
+                else if (data.weather[0].main == "Rain"){
+                    iconMeteo.src = "images/rain.png";
+                }
+                else if (data.weather[0].main == "Drizzle"){
+                    iconMeteo.src = "images/drizzle.png";
+                }
+                else if (data.weather[0].main == "Mist"){
+                    iconMeteo.src = "images/mist.png";
+                }
+                document.querySelector(".meteo").style.display = "block";
+            }
+            searchBouton.addEventListener("click", () => {
+                    checkmeteo(searchBox.value);
+            });
+            checkmeteo(ville);
+        </script>
+    </body>
+    </html>
